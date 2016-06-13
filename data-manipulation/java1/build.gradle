@@ -8,13 +8,24 @@ repositories {
 
 dependencies {
     compile 'org.slf4j:slf4j-api:1.7.13'
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.0.1'
+    compile 'org.apache.logging.log4j:log4j-slf4j-impl:2.0'
+    compile 'org.apache.logging.log4j:log4j-core:2.0'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.7.4'
+    compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-csv:2.7.4'
     testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-all:1.10.19'
 }
 
 
 task execute (type:JavaExec) {
-    main = 'rubiconproject.Main'
+    mainClassName = 'rubiconproject.Main'
     classpath = sourceSets.main.runtimeClasspath
     args System.getProperty("exec.args","").split()
+}
+
+task debug (type:JavaExec) {
+    main = 'rubiconproject.Main'
+    classpath = sourceSets.main.runtimeClasspath
+    args System.getProperty("exec.args","/tmp/input/ /tmp/output.json").split()
+    debug true
 }
